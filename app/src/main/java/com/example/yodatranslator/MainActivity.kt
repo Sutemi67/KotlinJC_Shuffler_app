@@ -1,11 +1,9 @@
 package com.example.yodatranslator
 
-import android.graphics.Paint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,7 +32,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             YodaTranslatorTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
+                    MainScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -44,7 +42,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(modifier: Modifier = Modifier) {
+fun MainScreen(modifier: Modifier = Modifier) {
     var textString by remember { mutableStateOf("Введите текст") }
     var input by remember { mutableStateOf("") }
 
@@ -54,7 +52,9 @@ fun Greeting(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = textString,
-            modifier = modifier.height(50.dp).width(250.dp)
+            modifier = modifier
+                .height(50.dp)
+                .width(250.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -63,23 +63,26 @@ fun Greeting(modifier: Modifier = Modifier) {
             onValueChange = { input = it },
             singleLine = true
         )
+        Spacer(modifier = Modifier.height(20.dp))
         Button(
-            onClick = { textString = textTranslator(input) }
+            onClick = { textString = textShuffler(input) }
         ) {
             Text(text = "Translate")
         }
     }
 }
 
-fun textTranslator(text: String): String {
-    val translatedText = text + "ddf"
-    return translatedText
+fun textShuffler(text: String): String {
+    val translatedText = text.toCharArray()
+    val outArray = translatedText.shuffle()
+    val outText = outArray.toString()
+    return outText
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     YodaTranslatorTheme {
-        Greeting()
+        MainScreen()
     }
 }
