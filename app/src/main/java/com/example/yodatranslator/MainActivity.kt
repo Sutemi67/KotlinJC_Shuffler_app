@@ -1,5 +1,6 @@
 package com.example.yodatranslator
 
+import android.graphics.Paint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,23 +46,28 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(modifier: Modifier = Modifier) {
     var textString by remember { mutableStateOf("Введите текст") }
-    val input by remember { mutableStateOf("") }
+    var input by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = textString,
-            modifier = modifier
+            modifier = modifier.height(50.dp).width(250.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
+
         OutlinedTextField(
             value = input,
-            onValueChange = { textString = textTranslator(input) },
+            onValueChange = { input = it },
             singleLine = true
         )
+        Button(
+            onClick = { textString = textTranslator(input) }
+        ) {
+            Text(text = "Translate")
+        }
     }
 }
 
